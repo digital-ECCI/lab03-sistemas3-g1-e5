@@ -103,18 +103,18 @@ class MonitorTemperaturaRPI:
         # Etiquetas y formato
         self.ax.set_xlabel("Tiempo (s)")
         self.ax.set_ylabel("Temperatura (°C)")
-        self.ax.grid(True, alpha=0.3)        # Rejilla suave
-        self.ax.legend()                     # Muestra leyenda umbrales
-        self.fig.canvas.draw()               # Redibuja canvas
-        self.fig.canvas.flush_events()       # Actualiza ventana
+        self.ax.grid(True, alpha=0.3)        #! Rejilla suave
+        self.ax.legend()                     #! Muestra leyenda umbrales
+        self.fig.canvas.draw()               #! Redibuja canvas
+        self.fig.canvas.flush_events()       #! Actualiza ventana
 
     def guardar_csv(self):
         """Exporta datos a CSV con timestamps"""
         if self.tiempos:                     # Solo si hay datos
             # Crea DataFrame con 3 columnas
             df = pd.DataFrame({
-                'tiempo_s': self.tiempos,                    # Tiempo relativo (s)
-                'temperatura_C': self.temperaturas,          # Temperatura (°C)
+                'tiempo_s': self.tiempos,                    #! Tiempo relativo (s)
+                'temperatura_C': self.temperaturas,          #! Temperatura (°C)
                 'timestamp': [time.strftime('%Y-%m-%d %H:%M:%S', 
                                           time.localtime(self.inicio + t)) 
                             for t in self.tiempos]  # Timestamp absoluto
@@ -128,18 +128,18 @@ class MonitorTemperaturaRPI:
             print(" Monitoreo iniciado. Ctrl+C para parar.")
             # Bucle hasta que cierren ventana matplotlib
             while plt.fignum_exists(self.fig.number):
-                self.actualizar_datos()          # Lee y procesa datos
-                self.graficar()                  # Redibuja gráfico
-                time.sleep(self.intervalo)       # Pausa entre ciclos
+                self.actualizar_datos()          #! Lee y procesa datos
+                self.graficar()                  #! Redibuja gráfico
+                time.sleep(self.intervalo)       #! Pausa entre ciclos
 
-        except KeyboardInterrupt:            # Ctrl+C del usuario
+        except KeyboardInterrupt:            #! Ctrl+C del usuario
             print("\n⏹ Monitoreo interrumpido por usuario.")
 
-        finally:                             # SIEMPRE ejecuta (cleanup)
-            self.guardar_csv()               # Guarda datos finales
+        finally:                             #! SIEMPRE ejecuta (cleanup)
+            self.guardar_csv()               #! Guarda datos finales
             print("Monitoreo finalizado.")
-            plt.ioff()                       # Desactiva modo interactivo
-            plt.close(self.fig)              # Cierra ventana gráfica
+            plt.ioff()                       #! Desactiva modo interactivo
+            plt.close(self.fig)              #! Cierra ventana gráfica
 
 
 if __name__ == "__main__":
